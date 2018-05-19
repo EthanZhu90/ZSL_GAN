@@ -6,8 +6,8 @@ Yizhe Zhu, Mohamed Elhoseiny, Bingchen Liu, Xi Peng and Ahmed Elgammal
 
 
 Data:
-You can download the dataset [CUB2011](https://drive.google.com/open?id=1WBbIzrN6YFVQLVDkwQM73M7YwFubO_pO)
-
+You can download the dataset [CUB2011](https://drive.google.com/open?id=1WBbIzrN6YFVQLVDkwQM73M7YwFubO_pO)   
+Put the uncompressed data to the folder "data"
 
 ### to trained the GAN model, run train.py
 ### to generate fake feature and do evaluation of ZSL, run test.py 
