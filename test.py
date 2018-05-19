@@ -17,6 +17,7 @@ from models import _netG, _param
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--gpu', default='0', type=str, help='index of GPU to use')
+parser.add_argument('--splitmode', default='easy', type=str, help='the way to split train/test data: easy/hard')
 opt = parser.parse_args()
 
 print(opt)
@@ -25,16 +26,26 @@ os.environ['CUDA_VISIBLE_DEVICES'] = opt.gpu
 """ hyper-parameter  """
 opt.nSample = 60  # number of fake feature for each class
 opt.Knn = 20      # knn: the value of K
-test_cls_num = 50
+
+
+opt.resume = 'out/CUB_Easy/Eu1_Rls0.001_RWz0.0001/D5_3000.tar'
 
 """Custom the data path """
-pfc_feat_file_train = 'data/CUB2011/pfc_feat_train.mat'
-pfc_feat_file       = 'data/CUB2011/pfc_feat_test.mat'
-txt_feat_path       = 'data/CUB2011/CUB_Porter_7551D_TFIDF_new.mat'
-train_test_split_dir = 'data/CUB2011/train_test_split_easy.mat'
-pfc_label_path = 'data/CUB2011/labels_test.pkl'
 
-opt.resume = 'out/CUB_EASY/Eu1_Rls0.001_RWz0.0001/D5_3000.tar'
+txt_feat_path  = 'data/CUB2011/CUB_Porter_7551D_TFIDF_new.mat'
+if opt.splitmode == 'easy':
+    train_test_split_dir = 'data/CUB2011/train_test_split_easy.mat'
+    pfc_label_path = 'data/CUB2011/labels_test.pkl'
+    pfc_feat_path_train = 'data/CUB2011/pfc_feat_train.mat'
+    pfc_feat_path = 'data/CUB2011/pfc_feat_test.mat'
+    test_cls_num = 50
+else:
+    train_test_split_dir = 'data/CUB2011/train_test_split_hard.mat'
+    pfc_label_path = 'data/CUB2011/labels_test_hard.pkl'
+    pfc_feat_path_train = 'data/CUB2011/pfc_feat_train_hard.mat'
+    pfc_feat_path = 'data/CUB2011/pfc_feat_test_hard.mat'
+    test_cls_num = 40
+
 
 def generate_fakefeat_test():
     param = _param()
@@ -61,13 +72,13 @@ def generate_fakefeat_test():
         G_sample = netG(z, text_feat)
         gen_feat = np.vstack((gen_feat, G_sample.data.cpu().numpy()))
 
-    pfc_feat_data_train = sio.loadmat(pfc_feat_file_train)
+    pfc_feat_data_train = sio.loadmat(pfc_feat_path_train)
     pfc_feat_data_train = pfc_feat_data_train['pfc_feat'].astype(np.float32)
 
-    pfc_feat_data = sio.loadmat(pfc_feat_file)
+    pfc_feat_data = sio.loadmat(pfc_feat_path)
     pfc_feat_data = pfc_feat_data['pfc_feat'].astype(np.float32)
 
-    cprint('Test feature load from: {}'.format(pfc_feat_file), 'red')
+    cprint('Test feature load from: {}'.format(pfc_feat_path), 'red')
 
     # Normalized testing data by centers of training data
     mean = pfc_feat_data_train.mean()

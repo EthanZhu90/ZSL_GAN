@@ -50,9 +50,10 @@ if opt.splitmode == 'easy':
     pfc_label_path = 'data/CUB2011/labels_train.pkl'
     pfc_feat_path = 'data/CUB2011/pfc_feat_train.mat'
     train_cls_num = 150
+
 else:
     train_test_split_dir = 'data/CUB2011/train_test_split_hard.mat'
-    pfc_label_path = 'data/CUB2011/labels_train_HardSplit.pkl'
+    pfc_label_path = 'data/CUB2011/labels_train_hard.pkl'
     pfc_feat_path = 'data/CUB2011/pfc_feat_train_hard.mat'
     train_cls_num = 160
 
