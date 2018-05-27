@@ -124,12 +124,6 @@ def train():
 
     for it in range(start_step, 3000+1):
         """ Discriminator """
-        if it in {2000, 2500}:
-            opt.lr = opt.lr/5.0
-            optimizerD = optim.Adam(netD.parameters(), lr=opt.lr, betas=(0.5, 0.9))
-            optimizerG = optim.Adam(netG.parameters(), lr=opt.lr, betas=(0.5, 0.9))
-            cprint("Learning rate:  {}".format(opt.lr), 'red')
-
         for _ in range(5):
             blobs = data_layer.forward()
             feat_data = blobs['data']             # image data
