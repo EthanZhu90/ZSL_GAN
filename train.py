@@ -25,8 +25,6 @@ parser.add_argument('--splitmode', default='easy', type=str, help='the way to sp
 opt = parser.parse_args()
 print(opt)
 
-opt.splitmode = 'hard'
-
 os.environ['CUDA_VISIBLE_DEVICES'] = opt.gpu
 
 
