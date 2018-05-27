@@ -28,7 +28,7 @@ opt.nSample = 60  # number of fake feature for each class
 opt.Knn = 20      # knn: the value of K
 
 
-opt.resume = 'out/CUB_Easy/Eu1_Rls0.001_RWz0.0001/D5_3000.tar'
+opt.resume = 'out/CUB_EASY/Eu1_Rls0.001_RWz0.0001/D5_3000.tar'
 
 """Custom the data path """
 
