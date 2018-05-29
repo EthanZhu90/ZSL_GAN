@@ -10,7 +10,7 @@ You can download the dataset [CUB2011](https://drive.google.com/open?id=1WBbIzrN
 Put the uncompressed data to the folder "data"
 
 ### To trained the GAN model, run train.py
-### To generate fake feature and do evaluation of ZSL, run test.py 
+### To generate fake features and do evaluation of ZSL, run test.py 
 
 
 ### Note:
