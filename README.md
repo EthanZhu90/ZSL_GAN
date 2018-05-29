@@ -13,3 +13,6 @@ Put the uncompressed data to the folder "data"
 ### To generate fake feature and do evaluation of ZSL, run test.py 
 
 
+### Note:
+The code was well tested in python2. 
+There might be some errors raising due to the incompatibility of pickle in python2&3.
