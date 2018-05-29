@@ -14,5 +14,5 @@ Put the uncompressed data to the folder "data"
 
 
 ### Note:
-The code was well tested in python2. 
+The code was well tested in python2.    
 There might be some errors raising due to the incompatibility of pickle in python2&3.
