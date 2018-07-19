@@ -26,7 +26,7 @@ python train_NAB.py --splitmode easy
 
 ### NABird SCE mode
 ```shell
-python train_NAB.py --splitmode easy
+python train_NAB.py --splitmode hard
 ```
 ### Citation
 If you find this implementation or the analysis conducted in our report helpful, please consider citing:
