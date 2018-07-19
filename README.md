@@ -30,13 +30,14 @@ python train_NAB.py --splitmode easy
 ```
 ### Citation
 If you find this implementation or the analysis conducted in our report helpful, please consider citing:
+```
     @inproceedings{Yizhe_ZSL_2018,  
         Author = {Yizhe Zhu, Mohamed Elhoseiny, Bingchen Liu, Xi Peng and Ahmed Elgammal},  
         Title = {A Generative Adversarial  Approach for Zero-Shot Learning from Noisy Texts},  
         Booktitle = {CVPR},  
         Year = {2018}  
     }
-
+```
 ### TODO:
 Add result evaluated on [GRU setting](https://arxiv.org/abs/1707.00600) 
 
