@@ -11,7 +11,7 @@ Put the uncompressed data to the folder "data"
 
 
 ### CUBird SCS mode
->>python train_CUB.py --splitmode easy
+'python train_CUB.py --splitmode easy'
 
 ### CUBird SCE mode
 >>python train_CUB.py --splitmode hard
@@ -22,6 +22,15 @@ Put the uncompressed data to the folder "data"
 ### NABird SCE mode
 >>python train_NAB.py --splitmode easy
 
+
+If you find this implementation or the analysis conducted in our report helpful, please consider citing:
+
+@inproceedings{Yizhe_ZSL_2018,
+    Author = {Yizhe Zhu, Mohamed Elhoseiny, Bingchen Liu, Xi Peng and Ahmed Elgammal},
+    Title = {A Generative Adversarial  Approach for Zero-Shot Learning from Noisy Texts},
+    Booktitle = {CVPR},
+    Year = {2018}
+}
 
 ### TODO:
 Add result evaluated on [GRU setting](https://arxiv.org/abs/1707.00600) 
