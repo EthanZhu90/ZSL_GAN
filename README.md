@@ -12,17 +12,22 @@ Put the uncompressed data to the folder "data"
 
 ### CUBird SCS mode
 ```python
-python train_CUB.py --splitmode easy```
+python train_CUB.py --splitmode easy
+```
 
 ### CUBird SCE mode
->>python train_CUB.py --splitmode hard
-
+```python
+python train_CUB.py --splitmode hard
+```
 ### NABird SCS mode
->>python train_NAB.py --splitmode easy
+```python
+python train_NAB.py --splitmode easy
+```
 
 ### NABird SCE mode
->>python train_NAB.py --splitmode easy
-
+```python
+python train_NAB.py --splitmode easy
+```
 
 If you find this implementation or the analysis conducted in our report helpful, please consider citing:
 
