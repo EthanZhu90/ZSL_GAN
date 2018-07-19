@@ -41,7 +41,9 @@ If you find this implementation or the analysis conducted in our report helpful,
 ### TODO:
 Add result evaluated on [GRU setting](https://arxiv.org/abs/1707.00600) 
 
-### Updata:
-2018/07/17 make code compatable with python2&3   
-2018/07/18 merge the train.py and test.py to one file   
-2018/07/18 add the experiments of NABird. 
+### Update:
+* 2018/07/18 add the experiments of NABird. 
+* 2018/07/18 merge the train.py and test.py to one file  
+* 2018/07/17 make code compatable with python2&3   
+ 
+
