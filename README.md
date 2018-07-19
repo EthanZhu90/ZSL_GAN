@@ -6,13 +6,24 @@ Yizhe Zhu, Mohamed Elhoseiny, Bingchen Liu, Xi Peng and Ahmed Elgammal
 
 
 Data:
-You can download the dataset [CUB2011](https://drive.google.com/open?id=1WBbIzrN6YFVQLVDkwQM73M7YwFubO_pO)   
+You can download the dataset [CUBird and NABird](https://drive.google.com/open?id=1YUcYHgv4HceHOzza8OGzMp092taKAAq1)   
 Put the uncompressed data to the folder "data"
 
-### To trained the GAN model, run train.py
-### To generate fake features and do evaluation of ZSL, run test.py 
+
+# CUBird SCS mode
+python train_CUB.py --splitmode easy
+# CUBird SCE mode
+python train_CUB.py --splitmode hard
+# NABird SCS mode
+python train_NAB.py --splitmode easy
+# NABird SCE mode
+python train_NAB.py --splitmode easy
 
 
-### Note:
-The code was well tested in python2.    
-There might be some errors raising due to the incompatibility of pickle in python2&3.
+### TODO:
+Add result evaluated on [GRU setting](https://arxiv.org/abs/1707.00600) 
+
+### Updata:
+2018/07/17 make code compatable with python2&3
+2018/07/18 merge the train.py and test.py to one file
+2018/07/18 add the experiments of NABird. 
