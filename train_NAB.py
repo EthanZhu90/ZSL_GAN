@@ -14,9 +14,8 @@ import os
 import random
 import glob
 
-from dataset import FeatDataLayer, LoadDataset
+from dataset import FeatDataLayer, LoadDataset_NAB
 from models import _netD, _netG, _param
-
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--gpu', default='0', type=str, help='index of GPU to use')
@@ -41,8 +40,6 @@ opt.REG_Wz_LAMBDA = 0.0001
 
 opt.lr = 0.0001
 opt.batchsize = 1000
-opt.resume = None  # model path to resume
-
 
 """ hyper-parameter for testing"""
 opt.nSample = 60  # number of fake feature for each class
@@ -58,8 +55,8 @@ torch.cuda.manual_seed_all(opt.manualSeed)
 
 def train():
     param = _param()
-    dataset = LoadDataset(opt)
-    param.X_dim = dataset.feature_dim
+    dataset = LoadDataset_NAB(opt)
+
 
     data_layer = FeatDataLayer(dataset.labels_train, dataset.pfc_feat_data_train, opt)
     result = Result()
@@ -71,7 +68,7 @@ def train():
     netD.apply(weights_init)
     print(netD)
 
-    exp_info = 'CUB_EASY' if opt.splitmode == 'easy' else 'CUB_HARD'
+    exp_info = 'NAB_EASY' if opt.splitmode == 'easy' else 'NAB_HARD'
     exp_params = 'Eu{}_Rls{}_RWz{}'.format(opt.CENT_LAMBDA , opt.REG_W_LAMBDA, opt.REG_Wz_LAMBDA)
 
     out_dir  = 'out/{:s}'.format(exp_info)
@@ -237,7 +234,7 @@ def train():
 
 
 def eval_fakefeat_test(it, netG, dataset, param, result):
-    gen_feat = np.zeros([0, param.X_dim])
+    gen_feat = np.zeros([0, dataset.feature_dim])
     for i in range(dataset.test_cls_num):
         text_feat = np.tile(dataset.test_text_feature[i].astype('float32'), (opt.nSample, 1))
         text_feat = Variable(torch.from_numpy(text_feat)).cuda()

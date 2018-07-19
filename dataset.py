@@ -54,6 +54,56 @@ class LoadDataset(object):
         self.text_dim = self.train_text_feature.shape[1]
 
 
+class LoadDataset_NAB(object):
+    def __init__(self, opt):
+        txt_feat_path = 'data/NABird/NAB_Porter_13217D_TFIDF_new.mat'
+        if opt.splitmode == 'easy':
+            train_test_split_dir = 'data/NABird/train_test_split_NABird_easy.mat'
+            pfc_label_path_train = 'data/NABird/labels_train.pkl'
+            pfc_label_path_test = 'data/NABird/labels_test.pkl'
+            pfc_feat_path_train = 'data/NABird/pfc_feat_train_easy.mat'
+            pfc_feat_path_test = 'data/NABird/pfc_feat_test_easy.mat'
+            train_cls_num = 323
+            test_cls_num = 81
+        else:
+            train_test_split_dir = 'data/NABird/train_test_split_NABird_hard.mat'
+            pfc_label_path_train = 'data/NABird/labels_train_hard.pkl'
+            pfc_label_path_test = 'data/NABird/labels_test_hard.pkl'
+            pfc_feat_path_train = 'data/NABird/pfc_feat_train_hard.mat'
+            pfc_feat_path_test = 'data/NABird/pfc_feat_test_hard.mat'
+            train_cls_num = 323
+            test_cls_num = 81
+
+        self.pfc_feat_data_train = sio.loadmat(pfc_feat_path_train)['pfc_feat'].astype(np.float32)
+        self.pfc_feat_data_test = sio.loadmat(pfc_feat_path_test)['pfc_feat'].astype(np.float32)
+        cprint("pfc_feat_file: {} || {} ".format(pfc_feat_path_train, pfc_feat_path_test), 'red')
+
+        self.train_cls_num = train_cls_num
+        self.test_cls_num  = test_cls_num
+        self.feature_dim = self.pfc_feat_data_train.shape[1]
+        # calculate the corresponding centroid.
+        with open(pfc_label_path_train, 'rb') as fout1, open(pfc_label_path_test, 'rb') as fout2:
+            if sys.version_info >= (3, 0):
+                self.labels_train = pickle.load(fout1, encoding='latin1')
+                self.labels_test  = pickle.load(fout2, encoding='latin1')
+            else:
+                self.labels_train = pickle.load(fout1)
+                self.labels_test  = pickle.load(fout2)
+
+        # Normalize feat_data to zero-centered
+        mean = self.pfc_feat_data_train.mean()
+        var = self.pfc_feat_data_train.var()
+        self.pfc_feat_data_train = (self.pfc_feat_data_train - mean) / var
+        self.pfc_feat_data_test = (self.pfc_feat_data_test - mean) / var
+
+        self.tr_cls_centroid = np.zeros([train_cls_num, self.pfc_feat_data_train.shape[1]]).astype(np.float32)
+        for i in range(train_cls_num):
+            self.tr_cls_centroid[i] = np.mean(self.pfc_feat_data_train[self.labels_train == i], axis=0)
+
+        self.train_text_feature, self.test_text_feature = get_text_feature(txt_feat_path, train_test_split_dir)
+        self.text_dim = self.train_text_feature.shape[1]
+
+
 class FeatDataLayer(object):
     def __init__(self, label, feat_data,  opt):
         assert len(label) == feat_data.shape[0]

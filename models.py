@@ -4,13 +4,11 @@ import torch.nn as nn
 rdc_text_dim = 1000
 z_dim = 100
 h_dim = 4086
-X_dim = 3584
 
 class _param:
     def __init__(self):
         self.rdc_text_dim = rdc_text_dim
         self.z_dim = z_dim
-        self.X_dim = X_dim
         self.h_dim = h_dim
 
 # reduce to dim of text first
