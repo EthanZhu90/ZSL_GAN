@@ -15,7 +15,7 @@ class _param:
 
 # reduce to dim of text first
 class _netG(nn.Module):
-    def __init__(self, text_dim=11083):
+    def __init__(self, text_dim=11083, X_dim=3584):
         super(_netG, self).__init__()
         self.rdc_text = nn.Linear(text_dim, rdc_text_dim)
         self.main = nn.Sequential(nn.Linear(z_dim + rdc_text_dim, h_dim),
@@ -29,8 +29,9 @@ class _netG(nn.Module):
         output = self.main(input)
         return output
 
+
 class _netD(nn.Module):
-    def __init__(self, y_dim=150):
+    def __init__(self, y_dim=150, X_dim=3584):
         super(_netD, self).__init__()
         # Discriminator net layer one
         self.D_shared = nn.Sequential(nn.Linear(X_dim, h_dim),
@@ -43,3 +44,4 @@ class _netD(nn.Module):
     def forward(self, input):
         h = self.D_shared(input)
         return self.D_gan(h), self.D_aux(h)
+

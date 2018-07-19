@@ -5,22 +5,27 @@ import torch.autograd as autograd
 import torch.optim as optim
 import torch.nn.init as init
 
-
+from sklearn.metrics.pairwise import cosine_similarity
 from termcolor import cprint
 from time import gmtime, strftime
-import scipy.io as sio
 import numpy as np
 import argparse
-import pickle
 import os
+import random
+import glob
 
-from dataset import FeatDataLayer, get_training_text_feature
+from dataset import FeatDataLayer, LoadDataset
 from models import _netD, _netG, _param
 
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--gpu', default='0', type=str, help='index of GPU to use')
 parser.add_argument('--splitmode', default='easy', type=str, help='the way to split train/test data: easy/hard')
+parser.add_argument('--manualSeed', type=int, help='manual seed')
+parser.add_argument('--resume',  type=str, help='the model to resume')
+parser.add_argument('--disp_interval', type=int, default=20)
+parser.add_argument('--save_interval', type=int, default=200)
+parser.add_argument('--evl_interval',  type=int, default=40)
 
 opt = parser.parse_args()
 print(opt)
@@ -28,60 +33,41 @@ print(opt)
 os.environ['CUDA_VISIBLE_DEVICES'] = opt.gpu
 
 
-""" hyper-parameter  """
-opt.GP_LAMBDA = 10                # Gradient penalty lambda hyperparameter
-opt.CENT_LAMBDA   = 1
+""" hyper-parameter for training """
+opt.GP_LAMBDA = 10      # Gradient penalty lambda
+opt.CENT_LAMBDA  = 1
 opt.REG_W_LAMBDA = 0.001
 opt.REG_Wz_LAMBDA = 0.0001
 
-opt.lr = 0.001
+opt.lr = 0.0001
 opt.batchsize = 1000
 opt.resume = None  # model path to resume
 
 
-"""Custom the data path """
+""" hyper-parameter for testing"""
+opt.nSample = 60  # number of fake feature for each class
+opt.Knn = 20      # knn: the value of K
 
 
-txt_feat_path  = 'data/CUB2011/CUB_Porter_7551D_TFIDF_new.mat'
-if opt.splitmode == 'easy':
-    train_test_split_dir = 'data/CUB2011/train_test_split_easy.mat'
-    pfc_label_path = 'data/CUB2011/labels_train.pkl'
-    pfc_feat_path = 'data/CUB2011/pfc_feat_train.mat'
-    train_cls_num = 150
-
-else:
-    train_test_split_dir = 'data/CUB2011/train_test_split_hard.mat'
-    pfc_label_path = 'data/CUB2011/labels_train_hard.pkl'
-    pfc_feat_path = 'data/CUB2011/pfc_feat_train_hard.mat'
-    train_cls_num = 160
+if opt.manualSeed is None:
+    opt.manualSeed = random.randint(1, 10000)
+print("Random Seed: ", opt.manualSeed)
+random.seed(opt.manualSeed)
+torch.manual_seed(opt.manualSeed)
+torch.cuda.manual_seed_all(opt.manualSeed)
 
 def train():
     param = _param()
-    pfc_feat_data = sio.loadmat(pfc_feat_path)
-    pfc_feat_data = pfc_feat_data['pfc_feat'].astype(np.float32)
-    cprint("pfc_feat_file: {}".format(pfc_feat_path), 'red')
+    dataset = LoadDataset(opt)
+    param.X_dim = dataset.feature_dim
 
-    # calculate the corresponding centroid.
-    with open(pfc_label_path, 'rb') as output:
-        labels = pickle.load(output)
-    tr_cls_centroid = np.zeros([train_cls_num, pfc_feat_data.shape[1]]).astype(np.float32)
-    for i in range(train_cls_num):
-        tr_cls_centroid[i] = np.mean(pfc_feat_data[labels == i], axis=0)
+    data_layer = FeatDataLayer(dataset.labels_train, dataset.pfc_feat_data_train, opt)
+    result = Result()
 
-    # Normalize feat_data to zero-centered
-    mean = pfc_feat_data.mean()
-    var  = pfc_feat_data.var()
-    pfc_feat_data = (pfc_feat_data - mean)/var
-
-    data_layer = FeatDataLayer(labels, pfc_feat_data, opt)
-
-    train_text_feature = get_training_text_feature(txt_feat_path, train_test_split_dir)
-    text_dim = train_text_feature.shape[1]
-
-    netG = _netG(text_dim).cuda()
+    netG = _netG(dataset.text_dim, dataset.feature_dim).cuda()
     netG.apply(weights_init)
     print(netG)
-    netD = _netD(train_cls_num).cuda()
+    netD = _netD(dataset.train_cls_num, dataset.feature_dim).cuda()
     netD.apply(weights_init)
     print(netD)
 
@@ -118,7 +104,7 @@ def train():
 
     nets = [netG, netD]
 
-    tr_cls_centroid = Variable(torch.from_numpy(tr_cls_centroid.astype('float32'))).cuda()
+    tr_cls_centroid = Variable(torch.from_numpy(dataset.tr_cls_centroid.astype('float32'))).cuda()
     optimizerD = optim.Adam(netD.parameters(), lr=opt.lr, betas=(0.5, 0.9))
     optimizerG = optim.Adam(netG.parameters(), lr=opt.lr, betas=(0.5, 0.9))
 
@@ -128,7 +114,7 @@ def train():
             blobs = data_layer.forward()
             feat_data = blobs['data']             # image data
             labels = blobs['labels'].astype(int)  # class labels
-            text_feat = np.array([ train_text_feature[i,:] for i in labels])
+            text_feat = np.array([dataset.train_text_feature[i,:] for i in labels])
             text_feat = Variable(torch.from_numpy(text_feat.astype('float32'))).cuda()
             X = Variable(torch.from_numpy(feat_data)).cuda()
             y_true = Variable(torch.from_numpy(labels.astype('int'))).cuda()
@@ -162,7 +148,7 @@ def train():
             blobs = data_layer.forward()
             feat_data = blobs['data']  # image data
             labels = blobs['labels'].astype(int)  # class labels
-            text_feat = np.array([train_text_feature[i, :] for i in labels])
+            text_feat = np.array([dataset.train_text_feature[i, :] for i in labels])
             text_feat = Variable(torch.from_numpy(text_feat.astype('float32'))).cuda()
 
             X = Variable(torch.from_numpy(feat_data)).cuda()
@@ -183,14 +169,14 @@ def train():
             # Centroid loss
             Euclidean_loss = Variable(torch.Tensor([0.0])).cuda()
             if opt.REG_W_LAMBDA != 0:
-                for i in range(train_cls_num):
+                for i in range(dataset.train_cls_num):
                     sample_idx = (y_true == i).data.nonzero().squeeze()
                     if sample_idx.numel() == 0:
                         Euclidean_loss += 0.0
                     else:
                         G_sample_cls = G_sample[sample_idx, :]
                         Euclidean_loss += (G_sample_cls.mean(dim=0) - tr_cls_centroid[i]).pow(2).sum().sqrt()
-                Euclidean_loss *= 1.0/train_cls_num * opt.CENT_LAMBDA
+                Euclidean_loss *= 1.0/dataset.train_cls_num * opt.CENT_LAMBDA
 
             # ||W||_2 regularization
             reg_loss = Variable(torch.Tensor([0.0])).cuda()
@@ -211,7 +197,7 @@ def train():
             optimizerG.step()
             reset_grad(nets)
 
-        if it % 50 == 0 and it:
+        if it % opt.disp_interval == 0 and it:
             acc_real = (np.argmax(C_real.data.cpu().numpy(), axis=1) == y_true.data.cpu().numpy()).sum() / float(y_true.data.size()[0])
             acc_fake = (np.argmax(C_fake.data.cpu().numpy(), axis=1) == y_true.data.cpu().numpy()).sum() / float(y_true.data.size()[0])
 
@@ -223,15 +209,73 @@ def train():
             with open(log_dir, 'a') as f:
                 f.write(log_text+'\n')
 
-        if it % 500 == 0 and it != 0:
+        if it % opt.evl_interval == 0 and it >= 100:
+            netG.eval()
+            eval_fakefeat_test(it, netG, dataset, param, result)
+            if result.save_model:
+                files2remove = glob.glob(out_subdir + '/Best_model*')
+                for _i in files2remove:
+                    os.remove(_i)
+                torch.save({
+                    'it': it + 1,
+                    'state_dict_G': netG.state_dict(),
+                    'state_dict_D': netD.state_dict(),
+                    'random_seed': opt.manualSeed,
+                    'log': log_text,
+                }, out_subdir + '/Best_model_Acc_{:.2f}.tar'.format(result.acc_list[-1]))
+            netG.train()
+
+        if it % opt.save_interval == 0 and it:
             torch.save({
                     'it': it + 1,
                     'state_dict_G': netG.state_dict(),
                     'state_dict_D': netD.state_dict(),
+                    'random_seed': opt.manualSeed,
                     'log': log_text,
-                },  out_subdir + '/D{:d}_{:d}.tar'.format(5, it))
-            cprint('Save model to '+ out_subdir + '/D{:d}_{:d}.tar'.format(5, it), 'red')
+                },  out_subdir + '/Iter_{:d}.tar'.format(it))
+            cprint('Save model to ' + out_subdir + '/Iter_{:d}.tar'.format(it), 'red')
 
+
+def eval_fakefeat_test(it, netG, dataset, param, result):
+    gen_feat = np.zeros([0, param.X_dim])
+    for i in range(dataset.test_cls_num):
+        text_feat = np.tile(dataset.test_text_feature[i].astype('float32'), (opt.nSample, 1))
+        text_feat = Variable(torch.from_numpy(text_feat)).cuda()
+        z = Variable(torch.randn(opt.nSample, param.z_dim)).cuda()
+        G_sample = netG(z, text_feat)
+        gen_feat = np.vstack((gen_feat, G_sample.data.cpu().numpy()))
+
+    # cosince predict K-nearest Neighbor
+    sim = cosine_similarity(dataset.pfc_feat_data_test, gen_feat)
+    idx_mat = np.argsort(-1 * sim, axis=1)
+    label_mat = (idx_mat[:, 0:opt.Knn] / opt.nSample).astype(int)
+    preds = np.zeros(label_mat.shape[0])
+    for i in range(label_mat.shape[0]):
+        (values, counts) = np.unique(label_mat[i], return_counts=True)
+        preds[i] = values[np.argmax(counts)]
+
+    # produce acc
+    label_T = np.asarray(dataset.labels_test)
+    acc = (preds == label_T).mean() * 100
+
+    result.acc_list += [acc]
+    result.iter_list += [it]
+    result.save_model = False
+    if acc > result.best_acc:
+        result.best_acc = acc
+        result.best_iter = it
+        result.save_model = True
+    print("{}nn with Cosine: ".format(opt.Knn))
+    print("Accuracy is {:.4}%, Best_acc [{:.4}% | Iter-{}]".format(acc, result.best_acc, result.best_iter))
+
+
+class Result(object):
+    def __init__(self):
+        self.best_acc = 0.0
+        self.best_iter = 0.0
+        self.acc_list = []
+        self.iter_list = []
+        self.save_model = False
 
 def weights_init(m):
     classname = m.__class__.__name__
@@ -243,7 +287,6 @@ def weights_init(m):
 def reset_grad(nets):
     for net in nets:
         net.zero_grad()
-
 
 def label2mat(labels, y_dim):
     c = np.zeros([labels.shape[0], y_dim])
