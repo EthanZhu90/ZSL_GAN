@@ -43,7 +43,7 @@ python train_NAB.py --splitmode hard
 | ALE [9]       |   59.9  |   16.8  |   76.1  |   27.5  |   54.9  |   23.7  |   62.8  |   **34.4**  |
 | SYNC [10]      |   54.0  |   8.9   |   87.3  |   16.2  |   **55.6**  |   11.5  |   70.9  |   19.8  |
 | SAE [11]       |   53.0  |   1.8   |   77.1  |   3.5   |   33.3  |   7.8   |   54.0  |   13.6  |
-| DEM         | **68.4** | **32.8** | 84.7  |  **47.3** | 51.7  |   19.6  |  57.9  |  29.2 |
+| DEM [12]        | **68.4** | **32.8** | 84.7  |  **47.3** | 51.7  |   19.6  |  57.9  |  29.2 |
 | **GAZSL (OURS)** | -- | -- | --  |  -- | --  |   --  |  --  |  -- |
 
 | Model      |   AwA2 T1    |    u    |    s    |    H    |   aPY T1    |    u    |    s    |    H    |
@@ -58,7 +58,7 @@ python train_NAB.py --splitmode hard
 | ALE [9]       |   62.5  |   14.0  |   81.8  |   23.9  |   39.7  |   4.6   |   73.7  |   8.7   |
 | SYNC [10]     |   46.6  |   10.0  |   90.5  |   18.0  |   23.9  |   7.4   |   66.3  |   13.3  |
 | SAE [11]      |   54.1  |   1.1   |   82.2  |   2.2   |   8.3   |   0.4   |   80.9  |   0.9   |
-| DEM           | **67.1** | **30.5** | 86.4 | **45.1**|   35.0  | **11.1**|  75.1   |**19.4** |
+| DEM [12]           | **67.1** | **30.5** | 86.4 | **45.1**|   35.0  | **11.1**|  75.1   |**19.4** |
 | **GAZSL (OURS)** | -- | -- | --  |  -- | --  |   --  |  --  |  -- |
 
 
@@ -74,7 +74,7 @@ python train_NAB.py --splitmode hard
 | ALE [9]       |   58.1  |   **21.8**  |   33.1  |   **26.3**  |   
 | SYNC [10]      |   56.3  |   7.9   |   **43.3**  |   13.4  |  
 | SAE [11]       |   40.3  |   8.8   |   18.0  |   11.8  |  
-| DEM            | **61.9** | 20.5 | 34.3 |  25.6 | 
+| DEM  [12]   | **61.9** | 20.5 | 34.3 |  25.6 | 
 | **GAZSL (OURS)** | -- | -- | --  |  -- |
 
 
@@ -130,4 +130,7 @@ If you find this implementation or the analysis conducted in our report helpful,
   CVPR, 2016.
 - [11] [Semantic Autoencoder for Zero-Shot Learning](https://arxiv.org/abs/1704.08345).
   Elyor Kodirov, Tao Xiang, Shaogang Gong.
+  CVPR, 2017.
+- [12] [Learning a Deep Embedding Model for Zero-Shot Learning](https://arxiv.org/abs/1611.05088).
+  Li Zhang, Tao Xiang, Shaogang Gong
   CVPR, 2017.
