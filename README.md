@@ -10,26 +10,26 @@ You can download the dataset [CUBird and NABird](https://drive.google.com/open?i
 Put the uncompressed data to the folder "data"
 
 ## Reproduce results 
-### CUBird SCS mode
+#### CUBird SCS mode
 ```shell
 python train_CUB.py --splitmode easy
 ```
 
-### CUBird SCE mode
+#### CUBird SCE mode
 ```shell
 python train_CUB.py --splitmode hard
 ```
-### NABird SCS mode
+#### NABird SCS mode
 ```shell
 python train_NAB.py --splitmode easy
 ```
 
-### NABird SCE mode
+#### NABird SCE mode
 ```shell
 python train_NAB.py --splitmode hard
 ```
 
-## GRU Results
+## Results evaluated on [GRU setting](https://arxiv.org/abs/1707.00600)[1] 
 
 | Model      |   AwA1 T1    |    u    |    s    |    H    |   CUB T1    |    u    |    s    |    H    |
 |------------|---------|---------|---------|---------|---------|---------|---------|---------|
@@ -96,4 +96,38 @@ If you find this implementation or the analysis conducted in our report helpful,
 * 2018/07/18 merge the train.py and test.py to one file  
 * 2018/07/17 make code compatable with python2&3   
  
-
+ 
+## References
+- [1] [Zero-Shot Learning - A Comprehensive Evaluation of the Good, the Bad and the Ugly](https://arxiv.org/abs/1707.00600).
+  Yongqin Xian, Christoph H. Lampert, Bernt Schiele, Zeynep Akata.
+  arXiv, 2017.
+- [2] [Attribute-Based Classification forZero-Shot Visual Object Categorization](https://cvml.ist.ac.at/papers/lampert-pami2013.pdf).
+  Christoph H. Lampert, Hannes Nickisch and Stefan Harmeling.
+  PAMI, 2014.
+- [3] [Zero-Shot Learning by Convex Combination of Semantic Embeddings](https://arxiv.org/abs/1312.5650).
+  Mohammad Norouzi, Tomas Mikolov, Samy Bengio, Yoram Singer, Jonathon Shlens, Andrea Frome, Greg S. Corrado, Jeffrey Dean.
+  arXiv, 2013.
+- [4] [Zero-Shot Learning via Semantic Similarity Embedding](https://arxiv.org/abs/1509.04767).
+  Ziming Zhang, Venkatesh Saligrama.
+  ICCV, 2015.
+- [5] [DeViSE: A Deep Visual-Semantic Embedding Model](http://papers.nips.cc/paper/5204-devise-a-deep-visual-semantic-embedding-model.pdf).
+  Andrea Frome*, Greg S. Corrado*, Jonathon Shlens*, Samy BengioJeffrey Dean, Marc’Aurelio Ranzato, Tomas Mikolov.
+  NIPS, 2013.
+- [6] [Evaluation of Output Embeddings for Fine-Grained Image Classification](https://arxiv.org/abs/1409.8403).
+  Zeynep Akata, Scott Reed, Daniel Walter, Honglak Lee, Bernt Schiele.
+  CVPR, 2015.
+- [7] [Latent Embeddings for Zero-shot Classification](https://arxiv.org/abs/1603.08895).
+  Yongqin Xian, Zeynep Akata, Gaurav Sharma, Quynh Nguyen, Matthias Hein, Bernt Schiele
+  CVPR, 2016.
+- [8] [An embarrassingly simple approach to zero-shot learning](http://proceedings.mlr.press/v37/romera-paredes15.pdf).
+  Bernardino Romera-Paredes, Philip H. S. Torr.
+  ICML, 2015.
+- [9] [Label-Embedding for Image Classification](https://arxiv.org/abs/1503.08677).
+  Zeynep Akata, Florent Perronnin, Zaid Harchaoui, Cordelia Schmid.
+  PAMI, 2016.
+- [10] [Synthesized Classifiers for Zero-Shot Learning](https://arxiv.org/abs/1603.00550).
+  Soravit Changpinyo, Wei-Lun Chao, Boqing Gong, Fei Sha.
+  CVPR, 2016.
+- [11] [Semantic Autoencoder for Zero-Shot Learning](https://arxiv.org/abs/1704.08345).
+  Elyor Kodirov, Tao Xiang, Shaogang Gong.
+  CVPR, 2017.
