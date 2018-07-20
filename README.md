@@ -70,7 +70,7 @@ python train_NAB.py --splitmode hard
 | DEM [12]   | **61.9** | 20.5 | 34.3 |  25.6 | 
 | **GAZSL (OURS)** | -- | -- | --  |  -- |
 
-** Note: ** The results of work[2-11] are copied from TABLE6 in [1]. The results of work[12] are obtained from the authors' [report](https://github.com/lzrobots/DeepEmbeddingModel_ZSL).
+**Note:** The results of work **[2-11]** are copied from TABLE6 in **[1]**. The results of work **[12]** are obtained from the authors' [report](https://github.com/lzrobots/DeepEmbeddingModel_ZSL).
 ### Citation
 If you find this implementation or the analysis conducted in our report helpful, please consider citing:
 ```
