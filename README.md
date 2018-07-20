@@ -10,22 +10,15 @@ You can download the dataset [CUBird and NABird](https://drive.google.com/open?i
 Put the uncompressed data to the folder "data"
 
 ## Reproduce results 
-#### CUBird SCS mode
+#### CUBird SCS mode && SCE mode
 ```shell
 python train_CUB.py --splitmode easy
-```
-
-#### CUBird SCE mode
-```shell
 python train_CUB.py --splitmode hard
 ```
-#### NABird SCS mode
+
+#### NABird SCS mode && SCE mode
 ```shell
 python train_NAB.py --splitmode easy
-```
-
-#### NABird SCE mode
-```shell
 python train_NAB.py --splitmode hard
 ```
 
