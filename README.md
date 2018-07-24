@@ -24,6 +24,16 @@ python train_NAB.py --splitmode hard
 
 ## Results evaluated on [GRU setting](https://arxiv.org/abs/1707.00600)[1] 
 
+Download the [data](https://www.mpi-inf.mpg.de/departments/computer-vision-and-multimodal-computing/research/zero-shot-learning/zero-shot-learning-the-good-the-bad-and-the-ugly/) and compress it to the folder 'data/GBU'.
+```shell
+python train_GRU.py --dataset CUB1 --preprocessing --z_dim 100
+python train_GRU.py --dataset AWA1 --preprocessing --z_dim 10
+python train_GRU.py --dataset AWA2 --preprocessing --z_dim 10
+python train_GRU.py --dataset APY --preprocessing --z_dim 10
+python train_GRU.py --dataset SUN --preprocessing --z_dim 10
+```
+
+
 | Model      |   AwA1 T1    |    u    |    s    |    H    |   CUB T1    |    u    |    s    |    H    |
 |------------|---------|---------|---------|---------|---------|---------|---------|---------|
 | DAP [2]      |   44.1  |   0.0   |   **88.7**  |   0.0   |   40.0  |   1.7   |   67.9  |   3.3   |
