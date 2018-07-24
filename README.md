@@ -82,7 +82,7 @@ If you find this implementation or the analysis conducted in our report helpful,
 }
 ```
 ### TODO:
-* Add result evaluated on [GRU setting](https://arxiv.org/abs/1707.00600) 
+* ~~Add result evaluated on [GRU setting](https://arxiv.org/abs/1707.00600)~~ 
 
 ### Update:
 * 2018/07/18 add the experiments of NABird. 
