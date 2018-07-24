@@ -51,7 +51,7 @@ python train_NAB.py --splitmode hard
 | ALE [9]       |   62.5  |   14.0  |   81.8  |   23.9  |   39.7  |   4.6   |   73.7  |   8.7   |
 | SYNC [10]     |   46.6  |   10.0  |   90.5  |   18.0  |   23.9  |   7.4   |   66.3  |   13.3  |
 | SAE [11]      |   54.1  |   1.1   |   82.2  |   2.2   |   8.3   |   0.4   |   80.9  |   0.9   |
-| DEM [12]           | 67.1 | **30.5** | 86.4 | **45.1**|   35.0  | 11.1|  75.1   |19.4 |
+| DEM [12]           | 67.1 | **30.5** | 86.4 | **45.1**| 35.0  | 11.1|  75.1   |19.4 |
 | **GAZSL (OURS)** | **69.0** | 27.0 | 82.4  |  40.6  | **41.13**  |   **14.17**  |  78.63  |  **24.01**|
 
 
@@ -68,7 +68,7 @@ python train_NAB.py --splitmode hard
 | SYNC [10]      |   56.3  |   7.9   |   **43.3**  |   13.4  |  
 | SAE [11] |  40.3  | 8.8 |18.0| 11.8  |  
 | DEM [12]   | **61.9** | 20.5 | 34.3 |  25.6 | 
-| **GAZSL (OURS)** | 61.25 | 21.7 | 34.5  |  **26.7** |
+| **GAZSL (OURS)** | 61.3 | 21.7 | 34.5  |  **26.7** |
 
 **Note:** The results of work **[2-11]** are copied from TABLE6 in **[1]**. The results of work **[12]** are obtained from the authors' [report](https://github.com/lzrobots/DeepEmbeddingModel_ZSL).
 ### Citation
