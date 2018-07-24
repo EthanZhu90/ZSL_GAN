@@ -263,8 +263,8 @@ def eval_fakefeat_test(it, netG, dataset, param, result):
         result.best_acc = acc
         result.best_iter = it
         result.save_model = True
-    print("{}nn with Cosine: ".format(opt.Knn))
-    print("Accuracy is {:.4}%, Best_acc [{:.4}% | Iter-{}]".format(acc, result.best_acc, result.best_iter))
+    print("{}nn Classifier: ".format(opt.Knn))
+    print("Accuracy is {:.4}%]".format(acc))
 
 
 class Result(object):
