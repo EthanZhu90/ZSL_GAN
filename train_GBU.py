@@ -14,7 +14,7 @@ import os
 import glob
 import random
 
-from dataset_GRU import FeatDataLayer, DATA_LOADER
+from dataset_GBU import FeatDataLayer, DATA_LOADER
 from models import _netD, _netG_att, _param
 
 parser = argparse.ArgumentParser()
