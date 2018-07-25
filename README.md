@@ -80,7 +80,7 @@ python train_GBU.py --dataset SUN --preprocessing --z_dim 10
 | DEM [12]   | **61.9** | 20.5 | 34.3 |  25.6 | 
 | **GAZSL (OURS)** | 61.3 | 21.7 | 34.5  |  **26.7** |
 
-**Note:** The results of work **[2-11]** are copied from TABLE6 in **[1]**. The results of work **[12]** are obtained from the authors' [report](https://github.com/lzrobots/DeepEmbeddingModel_ZSL).
+**Note:** The results of work **[2-11]** are copied from TABLE6 in **[1]**. The results of work **[12]** are obtained from the authors' [report](https://github.com/lzrobots/DeepEmbeddingModel_ZSL). Thanks to [Li Zhang](http://www.robots.ox.ac.uk/~lz/) for the pattern of README.
 ### Citation
 If you find this implementation or the analysis conducted in our report helpful, please consider citing:
 ```
