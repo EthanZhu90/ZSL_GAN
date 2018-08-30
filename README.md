@@ -65,8 +65,8 @@ python train_GBU.py --dataset SUN --preprocessing --z_dim 10
 | **GAZSL (OURS)** | **69.0** | 27.0 | 82.4  |  40.6  | **41.13**  |   **14.17**  |  78.63  |  **24.01**|
 
 
-| Model      |   SUN T1    |    u    |    s    |    H    |  
-|------------|---------|---------|---------|---------|
+| Model      |   SUN T1    |    u    |    s    |    H    |    FLO    |    u    |    s    |    H    |  
+|------------|---------|---------|---------|---------| ------------|---------|---------|---------|
 | DAP [2]      |   39.9  |   4.2   |   25.1  |   7.2   | 
 | CONSE [3]     |   38.8  |   6.8  |   39.9  |   11.6   |  
 | SSE [4]       |   51.5 |   2.1  |   36.4 |   4.0  |   
@@ -78,7 +78,7 @@ python train_GBU.py --dataset SUN --preprocessing --z_dim 10
 | SYNC [10]      |   56.3  |   7.9   |   **43.3**  |   13.4  |  
 | SAE [11] |  40.3  | 8.8 |18.0| 11.8  |  
 | DEM [12]   | **61.9** | 20.5 | 34.3 |  25.6 | 
-| **GAZSL (OURS)** | 61.3 | 21.7 | 34.5  |  **26.7** |
+| **GAZSL (OURS)** | 61.3 | 21.7 | 34.5  |  **26.7** | 28.1|77.4|41.2|60.5|
 
 **Note:** The results of work **[2-11]** are copied from TABLE6 in **[1]**. The results of work **[12]** are obtained from the authors' [report](https://github.com/lzrobots/DeepEmbeddingModel_ZSL). Thanks to [Li Zhang](http://www.robots.ox.ac.uk/~lz/) for the template of README.
 ### Citation
