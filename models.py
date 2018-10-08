@@ -43,3 +43,15 @@ class _netD(nn.Module):
         h = self.D_shared(input)
         return self.D_gan(h), self.D_aux(h)
 
+# In GBU setting, using attribute
+class _netG_att(nn.Module):
+    def __init__(self, att_dim, X_dim):
+        super(_netG_att, self).__init__()
+        self.main = nn.Sequential(nn.Linear(z_dim + att_dim, h_dim),
+                                  nn.LeakyReLU(),
+                                  nn.Linear(h_dim, X_dim),
+                                  nn.Tanh())
+    def forward(self, z, c):
+        input = torch.cat([z, c], 1)
+        output = self.main(input)
+        return output
