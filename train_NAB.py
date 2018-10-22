@@ -62,7 +62,8 @@ def train():
 
     data_layer = FeatDataLayer(dataset.labels_train, dataset.pfc_feat_data_train, opt)
     result = Result()
-
+    result_gzsl = Result()
+    
     netG = _netG(dataset.text_dim, dataset.feature_dim).cuda()
     netG.apply(weights_init)
     print(netG)
@@ -211,7 +212,7 @@ def train():
         if it % opt.evl_interval == 0 and it >= 100:
             netG.eval()
             eval_fakefeat_test(it, netG, dataset, param, result)
-            eval_fakefeat_GZSL(it, netG, dataset, param, result)
+            eval_fakefeat_GZSL(it, netG, dataset, param, result_gzsl)
             if result.save_model:
                 files2remove = glob.glob(out_subdir + '/Best_model*')
                 for _i in files2remove:
