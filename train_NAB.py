@@ -6,6 +6,7 @@ import torch.optim as optim
 import torch.nn.init as init
 
 from sklearn.metrics.pairwise import cosine_similarity
+import scipy.integrate as integrate
 from termcolor import cprint
 from time import gmtime, strftime
 import numpy as np
@@ -13,6 +14,7 @@ import argparse
 import os
 import random
 import glob
+import copy 
 
 from dataset import FeatDataLayer, LoadDataset_NAB
 from models import _netD, _netG, _param
@@ -263,9 +265,55 @@ def eval_fakefeat_test(it, netG, dataset, param, result):
         result.best_iter = it
         result.save_model = True
     print("{}nn Classifier: ".format(opt.Knn))
-    print("Accuracy is {:.4}%]".format(acc))
+    print("Accuracy is {:.4}%".format(acc))
 
+""" Generalized ZSL"""
+def eval_fakefeat_GZSL(it, netG, dataset, param, result):
+    gen_feat = np.zeros([0, param.X_dim])
+    for i in range(dataset.train_cls_num):
+        text_feat = np.tile(dataset.train_text_feature[i].astype('float32'), (opt.nSample, 1))
+        text_feat = Variable(torch.from_numpy(text_feat)).cuda()
+        z = Variable(torch.randn(opt.nSample, param.z_dim)).cuda()
+        G_sample = netG(z, text_feat)
+        gen_feat = np.vstack((gen_feat, G_sample.data.cpu().numpy()))
 
+    for i in range(dataset.test_cls_num):
+        text_feat = np.tile(dataset.test_text_feature[i].astype('float32'), (opt.nSample, 1))
+        text_feat = Variable(torch.from_numpy(text_feat)).cuda()
+        z = Variable(torch.randn(opt.nSample, param.z_dim)).cuda()
+        G_sample = netG(z, text_feat)
+        gen_feat = np.vstack((gen_feat, G_sample.data.cpu().numpy()))
+
+    visual_pivots = [gen_feat[i * opt.nSample:(i + 1) * opt.nSample].mean(0) \
+                     for i in range(dataset.train_cls_num + dataset.test_cls_num)]
+    visual_pivots = np.vstack(visual_pivots)
+
+    """collect points for gzsl curve"""
+
+    acc_S_T_list, acc_U_T_list = list(), list()
+    seen_sim = cosine_similarity(dataset.pfc_feat_data_train, visual_pivots)
+    unseen_sim = cosine_similarity(dataset.pfc_feat_data_test, visual_pivots)
+    for GZSL_lambda in np.arange(-2, 2, 0.01):
+        tmp_seen_sim = copy.deepcopy(seen_sim)
+        tmp_seen_sim[:, dataset.train_cls_num:] += GZSL_lambda
+        pred_lbl = np.argmax(tmp_seen_sim, axis=1)
+        acc_S_T_list.append((pred_lbl == np.asarray(dataset.labels_train)).mean())
+
+        tmp_unseen_sim = copy.deepcopy(unseen_sim)
+        tmp_unseen_sim[:, dataset.train_cls_num:] += GZSL_lambda
+        pred_lbl = np.argmax(tmp_unseen_sim, axis=1)
+        acc_U_T_list.append((pred_lbl == (np.asarray(dataset.labels_test) + dataset.train_cls_num)).mean())
+
+    auc_score = integrate.trapz(y=acc_S_T_list, x=acc_U_T_list)
+
+    result.acc_list += [auc_score]
+    result.iter_list += [it]
+    result.save_model = False
+    if auc_score > result.best_acc:
+        result.best_acc = auc_score
+        result.best_iter = it
+        result.save_model = True
+    print("AUC Score is {:.4}".format(auc_score))
 class Result(object):
     def __init__(self):
         self.best_acc = 0.0
