@@ -211,6 +211,7 @@ def train():
         if it % opt.evl_interval == 0 and it >= 100:
             netG.eval()
             eval_fakefeat_test(it, netG, dataset, param, result)
+            eval_fakefeat_GZSL(it, netG, dataset, param, result)
             if result.save_model:
                 files2remove = glob.glob(out_subdir + '/Best_model*')
                 for _i in files2remove:
