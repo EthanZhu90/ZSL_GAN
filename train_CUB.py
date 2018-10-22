@@ -14,6 +14,7 @@ import argparse
 import os
 import random
 import glob
+import copy 
 
 from dataset import FeatDataLayer, LoadDataset
 from models import _netD, _netG, _param
