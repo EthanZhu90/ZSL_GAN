@@ -45,9 +45,9 @@ class _netD(nn.Module):
 
 # In GBU setting, using attribute
 class _netG_att(nn.Module):
-    def __init__(self, att_dim, X_dim):
+    def __init__(self, opt, att_dim, X_dim):
         super(_netG_att, self).__init__()
-        self.main = nn.Sequential(nn.Linear(z_dim + att_dim, h_dim),
+        self.main = nn.Sequential(nn.Linear(opt.z_dim + att_dim, h_dim),
                                   nn.LeakyReLU(),
                                   nn.Linear(h_dim, X_dim),
                                   nn.Tanh())
