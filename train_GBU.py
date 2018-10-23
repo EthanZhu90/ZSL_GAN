@@ -13,6 +13,7 @@ import argparse
 import os
 import glob
 import random
+import json
 
 from dataset_GBU import FeatDataLayer, DATA_LOADER
 from models import _netD, _netG_att, _param
@@ -39,9 +40,10 @@ parser.add_argument('--disp_interval', type=int, default=20)
 parser.add_argument('--save_interval', type=int, default=200)
 parser.add_argument('--evl_interval',  type=int, default=40)
 
-
 opt = parser.parse_args()
-print(opt)
+print('Running parameters:')
+print(json.dumps(vars(opt), indent=4, separators=(',', ':')))
+
 os.environ['CUDA_VISIBLE_DEVICES'] = opt.gpu
 
 """ hyper-parameter  """
