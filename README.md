@@ -79,7 +79,7 @@ python train_GBU.py --dataset FLO --preprocessing --z_dim 100
 | SYNC [10]      |   56.3  |   7.9   |   **43.3**  |   13.4  |  
 | SAE [11] |  40.3  | 8.8 |18.0| 11.8  |  
 | DEM [12]   | **61.9** | 20.5 | 34.3 |  25.6 | 
-| **GAZSL (OURS)** | 61.3 | 21.7 | 34.5  |  **26.7** |60.5| 28.1|77.4|41.2|
+| **GAZSL (OURS)** | 61.3 | 22.1 | 39.3 |  **28.3** |60.5| 28.1|77.4|41.2|
 
 **Note:** The results of work **[2-11]** are copied from TABLE6 in **[1]**. The results of work **[12]** are obtained from the authors' [report](https://github.com/lzrobots/DeepEmbeddingModel_ZSL). Thanks to [Li Zhang](http://www.robots.ox.ac.uk/~lz/) for the template of README.
 ### Citation
