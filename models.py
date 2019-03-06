@@ -3,7 +3,7 @@ import torch.nn as nn
 
 rdc_text_dim = 1000
 z_dim = 100
-h_dim = 4086
+h_dim = 4096
 
 class _param:
     def __init__(self):
