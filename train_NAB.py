@@ -170,7 +170,7 @@ def train():
 
             # Centroid loss
             Euclidean_loss = Variable(torch.Tensor([0.0])).cuda()
-            if opt.REG_W_LAMBDA != 0:
+            if opt.CENT_LAMBDA != 0:
                 for i in range(dataset.train_cls_num):
                     sample_idx = (y_true == i).data.nonzero().squeeze()
                     if sample_idx.numel() == 0:
