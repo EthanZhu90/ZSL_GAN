@@ -1,5 +1,5 @@
-# ZSL_GAN_CVPR18
-code for the paper.
+# ZSL_GAN
+code for the conference and the journal versions of the paper:
 
 Yizhe Zhu, Mohamed Elhoseiny, Bingchen Liu, Xi Peng and Ahmed Elgammal
 "A Generative Adversarial  Approach for Zero-Shot Learning from Noisy Texts", CVPR, 2018
