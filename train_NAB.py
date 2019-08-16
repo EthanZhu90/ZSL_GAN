@@ -60,7 +60,7 @@ torch.cuda.manual_seed_all(opt.manualSeed)
 def train():
     param = _param()
     dataset = LoadDataset_NAB(opt)
-
+    param.X_dim = dataset.feature_dim 
 
     data_layer = FeatDataLayer(dataset.labels_train, dataset.pfc_feat_data_train, opt)
     result = Result()
