@@ -24,7 +24,7 @@ python train_NAB.py --splitmode hard
 
 ## Results evaluated on [GBU setting](https://arxiv.org/abs/1707.00600)[1] 
 
-Download the [data](https://www.mpi-inf.mpg.de/departments/computer-vision-and-multimodal-computing/research/zero-shot-learning/zero-shot-learning-the-good-the-bad-and-the-ugly/) and compress it to the folder 'data/GBU'.
+Download the [data](https://www.mpi-inf.mpg.de/departments/computer-vision-and-multimodal-computing/research/zero-shot-learning/zero-shot-learning-the-good-the-bad-and-the-ugly/) and uncompress it to the folder 'data/GBU'.
 ```shell
 python train_GBU.py --dataset CUB1 --preprocessing --z_dim 100
 python train_GBU.py --dataset AWA1 --preprocessing --z_dim 10
