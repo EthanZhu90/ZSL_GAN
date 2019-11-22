@@ -5,9 +5,13 @@ Yizhe Zhu, Mohamed Elhoseiny, Bingchen Liu, Xi Peng and Ahmed Elgammal
 "A Generative Adversarial  Approach for Zero-Shot Learning from Noisy Texts", CVPR, 2018
 
 
-Data:
+## Processed feature Data:
 You can download the dataset [CUBird and NABird](https://drive.google.com/open?id=1YUcYHgv4HceHOzza8OGzMp092taKAAq1)   
 Put the uncompressed data to the folder "data"
+
+## Raw wikipedia article data:
+Raw wikipedia article data of CUBird and NABird, as well as detailed merging information of NABird,  can be obtained [here](https://drive.google.com/open?id=0B_8vkk7CF-pwckxLQTVkcDBadGc).
+
 
 ## Reproduce results 
 #### CUBird SCS mode && SCE mode
