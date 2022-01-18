@@ -10,7 +10,7 @@ You can download the dataset [CUBird and NABird](https://drive.google.com/open?i
 Put the uncompressed data to the folder "data"
 
 ## Raw wikipedia article data:
-Raw wikipedia article data of CUBird and NABird, as well as detailed merging information of NABird,  can be obtained [here](https://drive.google.com/open?id=0B_8vkk7CF-pwckxLQTVkcDBadGc).
+Raw wikipedia article data of CUBird and NABird, as well as detailed merging information of NABird,  can be obtained [here](https://drive.google.com/file/d/1DobpeMWNaTq0OCIradc9xNVJwZg4tzHv/view?usp=sharing).
 
 
 ## Reproduce results 
@@ -100,6 +100,7 @@ If you find this implementation or the analysis conducted in our report helpful,
 * ~~Add result evaluated on [GBU setting](https://arxiv.org/abs/1707.00600)~~ 
 
 ### Update:
+* 2022/01/10 update the link of shared raw wiki data
 * 2018/10/22 add AUC Score for CUBird and NABird
 * 2018/07/23 add results on GBU setting 
 * 2018/07/18 add the experiments of NABird. 
